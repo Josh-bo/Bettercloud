@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BETTER CLOUD | Telecommunications</title>
+  <style>
+    :root {
+      --green-900: #063a1f;
+      --green-800: #0b5d31;
+      --green-700: #118046;
+      --green-600: #17a153;
+      --green-500: #24c96a;
+      --green-400: #56e087;
+      --green-200: #d8f8e4;
+      --white: #ffffff;
+      --mint: #f5fff8;
+      --slate: #103120;
+      --shadow: 0 24px 60px rgba(7, 72, 36, 0.16);
+      --card: rgba(255, 255, 255, 0.82);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 128px;
+    }
+
+    body {
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--slate);
+      background:
+        radial-gradient(circle at top left, rgba(86, 224, 135, 0.24), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(36, 201, 106, 0.18), transparent 22%),
+        linear-gradient(180deg, #f9fffb 0%, #eefaf2 40%, #ffffff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(24px);
+      opacity: 0.5;
+    }
+
+    body::before {
+      width: 320px;
+      height: 320px;
+      left: -80px;
+      top: 90px;
+      background: rgba(36, 201, 106, 0.24);
+    }
+
+    body::after {
+      width: 280px;
+      height: 280px;
+      right: -70px;
+      top: 340px;
+      background: rgba(17, 128, 70, 0.2);
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 24px auto;
+      padding: 18px;
+      border-radius: 36px;
+      background: rgba(255, 255, 255, 0.64);
+      border: 1px solid rgba(17, 128, 70, 0.12);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 8px 26px;
+      position: sticky;
+      top: 12px;
+      z-index: 40;
+      transition: padding 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .topbar.is-stuck {
+      padding: 12px 16px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(17, 128, 70, 0.12);
+      box-shadow: 0 18px 34px rgba(7, 72, 36, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 74px;
+      height: 74px;
+      flex: 0 0 auto;
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(216, 248, 228, 0.96));
+      border: 1px solid rgba(17, 128, 70, 0.12);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 18px 30px rgba(10, 95, 49, 0.14);
+    }
+
+    .brand-copy small {
+      display: block;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--green-700);
+      margin-bottom: 5px;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.03em;
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .topnav a {
+      text-decoration: none;
+      color: var(--green-800);
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .topnav a:hover,
+    .topnav a:focus-visible {
+      background: rgba(36, 201, 106, 0.11);
+      outline: none;
+    }
+
+    .topnav a.is-active {
+      background: linear-gradient(135deg, var(--green-600), var(--green-800));
+      color: var(--white);
+      box-shadow: 0 14px 26px rgba(10, 95, 49, 0.22);
+    }
+
+    .nav-target {
+      position: relative;
+      scroll-margin-top: 128px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-target.blink-target {
+      animation: target-blink 1.05s ease-in-out 2;
+    }
+
+    @keyframes target-blink {
+      0%,
+      100% {
+        box-shadow: none;
+        transform: translateY(0);
+      }
+
+      35% {
+        box-shadow: 0 0 0 8px rgba(36, 201, 106, 0.14), 0 0 0 18px rgba(36, 201, 106, 0.08);
+        transform: translateY(-2px);
+      }
+
+      60% {
+        box-shadow: 0 0 0 3px rgba(36, 201, 106, 0.04);
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+      padding: 34px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.93), rgba(244, 255, 247, 0.92) 40%, rgba(216, 248, 228, 0.88) 100%);
+      border: 1px solid rgba(17, 128, 70, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -120px;
+      top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(36, 201, 106, 0.22), transparent 70%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(36, 201, 106, 0.18);
+      color: var(--green-700);
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--green-500), var(--green-700));
+      box-shadow: 0 0 0 6px rgba(36, 201, 106, 0.14);
+    }
+
+    .hero h1 {
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 9.5ch;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: var(--green-700);
+    }
+
+    .hero p {
+      font-size: 1.06rem;
+      line-height: 1.8;
+      max-width: 58ch;
+      color: rgba(16, 49, 32, 0.82);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .button.primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--green-600), var(--green-800));
+      box-shadow: 0 16px 26px rgba(10, 95, 49, 0.26);
+    }
+
+    .button.secondary {
+      color: var(--green-800);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(17, 128, 70, 0.14);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+      box-shadow: 0 18px 30px rgba(10, 95, 49, 0.2);
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .metric {
+      min-width: 140px;
+      padding: 18px 18px 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(17, 128, 70, 0.1);
+      box-shadow: 0 16px 28px rgba(7, 72, 36, 0.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: 1.6rem;
+      color: var(--green-800);
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      color: rgba(16, 49, 32, 0.72);
+      font-size: 0.94rem;
+    }
+
+    .network-panel {
+      position: relative;
+      padding: 28px;
+      border-radius: 32px;
+      background:
+        linear-gradient(160deg, rgba(6, 58, 31, 0.96), rgba(12, 104, 55, 0.96));
+      color: var(--white);
+      min-height: 520px;
+      box-shadow: 0 28px 50px rgba(6, 58, 31, 0.26);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .network-panel::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      z-index: -1;
+    }
+
+    .network-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 18%, rgba(86, 224, 135, 0.34), transparent 18%),
+        radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.12), transparent 15%),
+        radial-gradient(circle at 50% 62%, rgba(36, 201, 106, 0.2), transparent 28%);
+      z-index: -2;
+    }
+
+    .signal-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 85%);
+    }
+
+    .orbits {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .orbit,
+    .orbit::before,
+    .orbit::after {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      content: "";
+    }
+
+    .orbit {
+      width: 330px;
+      height: 330px;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orbit::before {
+      inset: 28px;
+    }
+
+    .orbit::after {
+      inset: 58px;
+    }
+
+    .pulse {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--green-400);
+      box-shadow: 0 0 0 10px rgba(86, 224, 135, 0.2), 0 0 30px rgba(86, 224, 135, 0.65);
+    }
+
+    .pulse.one {
+      top: 132px;
+      left: calc(50% - 6px);
+    }
+
+    .pulse.two {
+      top: 225px;
+      left: calc(50% + 122px);
+      width: 10px;
+      height: 10px;
+    }
+
+    .pulse.three {
+      top: 286px;
+      left: calc(50% - 110px);
+      width: 12px;
+      height: 12px;
+    }
+
+    .panel-card {
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .panel-card h2 {
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .panel-card p {
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.84);
+      margin-bottom: 18px;
+    }
+
+    .coverage {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .coverage span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      padding: 26px 8px 8px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid rgba(17, 128, 70, 0.1);
+      box-shadow: 0 18px 32px rgba(7, 72, 36, 0.08);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(86, 224, 135, 0.2), transparent 68%);
+    }
+
+    .card h3 {
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      line-height: 1.78;
+      color: rgba(16, 49, 32, 0.78);
+    }
+
+    .card-number {
+      display: inline-grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(36, 201, 106, 0.18), rgba(17, 128, 70, 0.2));
+      color: var(--green-800);
+      font-weight: 800;
+    }
+
+    .highlight {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      padding: 22px 8px 8px;
+    }
+
+    .about-card,
+    .stats-card {
+      padding: 30px;
+      border-radius: 28px;
+      border: 1px solid rgba(17, 128, 70, 0.1);
+      box-shadow: 0 20px 34px rgba(7, 72, 36, 0.08);
+    }
+
+    .about-card {
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(236, 252, 241, 0.94));
+    }
+
+    .stats-card {
+      background:
+        linear-gradient(150deg, rgba(7, 72, 36, 0.98), rgba(17, 128, 70, 0.96));
+      color: var(--white);
+    }
+
+    .section-label {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .about-card .section-label {
+      background: rgba(36, 201, 106, 0.12);
+      color: var(--green-800);
+    }
+
+    .stats-card .section-label {
+      background: rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .about-card h2,
+    .stats-card h2 {
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 14px;
+      line-height: 1.05;
+    }
+
+    .about-card p,
+    .stats-card p {
+      line-height: 1.82;
+      font-size: 1rem;
+      color: inherit;
+      opacity: 0.86;
+    }
+
+    .stats-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .stats-item {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .stats-item strong {
+      display: block;
+      font-family: "Century Gothic", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .cta {
+      margin: 30px 8px 8px;
+      padding: 28px 30px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(17, 128, 70, 0.98), rgba(6, 58, 31, 0.98));
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      box-shadow: 0 26px 46px rgba(6, 58, 31, 0.24);
+    }
+
+    .cta h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+      max-width: 48ch;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    .cta .button.primary {
+      background: linear-gradient(135deg, #ffffff, #d8f8e4);
+      color: var(--green-900);
+      white-space: nowrap;
+    }
+
+    footer {
+      padding: 24px 10px 6px;
+      text-align: center;
+      color: rgba(16, 49, 32, 0.6);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .info-grid,
+      .highlight {
+        grid-template-columns: 1fr;
+      }
+
+      .network-panel {
+        min-height: 420px;
+      }
+
+      .cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        width: min(100% - 16px, 1180px);
+        margin: 8px auto;
+        padding: 12px;
+        border-radius: 24px;
+      }
+
+      .topbar,
+      .hero {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        top: 8px;
+      }
+
+      .topnav {
+        width: 100%;
+      }
+
+      .topnav a {
+        padding: 10px 14px;
+      }
+
+      .hero {
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+
+      .network-panel {
+        min-height: 380px;
+        padding: 20px;
+      }
+
+      .orbit {
+        width: 250px;
+        height: 250px;
+        top: 70px;
+      }
+
+      .pulse.one {
+        top: 115px;
+      }
+
+      .pulse.two {
+        top: 185px;
+        left: calc(50% + 92px);
+      }
+
+      .pulse.three {
+        top: 228px;
+        left: calc(50% - 84px);
+      }
+
+      .highlight,
+      .info-grid {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .stats-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="BETTER CLOUD home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cloudGlow" x1="8" y1="8" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#24C96A"/>
+                <stop offset="1" stop-color="#0B5D31"/>
+              </linearGradient>
+            </defs>
+            <path d="M17 35H35.4C40.15 35 44 31.26 44 26.65C44 22.4 40.72 18.91 36.45 18.42C35.18 12.95 30.18 9 24.2 9C17.97 9 12.8 13.28 11.58 19.17C7.95 20.4 5.35 23.76 5.35 27.7C5.35 31.72 8.56 35 12.55 35H17Z" fill="url(#cloudGlow)"/>
+            <path d="M18.5 29.2C20.13 26.57 22.91 24.82 26.1 24.82C29.29 24.82 32.07 26.57 33.7 29.2" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M15.1 25.8C17.56 22.12 21.55 19.7 26.1 19.7C30.65 19.7 34.64 22.12 37.1 25.8" stroke="white" stroke-width="2.8" stroke-linecap="round" opacity="0.88"/>
+            <circle cx="26.1" cy="31.9" r="2.4" fill="white"/>
+          </svg>
+        </div>
+        <div class="brand-copy">
+          <small>Telecommunications</small>
+          <strong>BETTER CLOUD</strong>
+        </div>
+      </a>
+
+      <nav class="topnav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#network">Network</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Reliable Signal. Smarter Connections.</div>
+          <h1>BETTER <span>CLOUD</span></h1>
+          <p>
+            BETTER CLOUD is a modern telecommunications brand built to keep homes, businesses,
+            and communities connected with fast broadband, stable voice solutions, and dependable
+            cloud-based communication services.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">Talk to Our Team</a>
+            <a class="button secondary" href="#services">Explore Services</a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric">
+              <strong>99.9%</strong>
+              <span>Network reliability</span>
+            </div>
+            <div class="metric">
+              <strong>24/7</strong>
+              <span>Support coverage</span>
+            </div>
+            <div class="metric">
+              <strong>5G+</strong>
+              <span>Future-ready telecom</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="network-panel nav-target" id="network">
+          <div class="signal-grid"></div>
+          <div class="orbits">
+            <div class="orbit"></div>
+            <div class="pulse one"></div>
+            <div class="pulse two"></div>
+            <div class="pulse three"></div>
+          </div>
+
+          <div class="panel-card">
+            <h2>Connected Everywhere That Matters</h2>
+            <p>
+              From enterprise communication systems to last-mile broadband delivery, BETTER CLOUD
+              combines strong infrastructure with elegant digital experiences.
+            </p>
+            <div class="coverage">
+              <span>Broadband</span>
+              <span>Fiber</span>
+              <span>Cloud Voice</span>
+              <span>Wireless</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="info-grid nav-target" id="services">
+        <article class="card">
+          <div class="card-number">01</div>
+          <h3>Enterprise Connectivity</h3>
+          <p>
+            Secure, scalable internet and data solutions that help businesses stay online,
+            productive, and ready for growth.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-number">02</div>
+          <h3>Cloud Communication</h3>
+          <p>
+            Smart voice, messaging, and collaboration systems designed for clear communication
+            across teams and customer channels.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-number">03</div>
+          <h3>Telecom Infrastructure</h3>
+          <p>
+            Strong network architecture, responsive support, and dependable signal delivery for
+            organizations that cannot afford downtime.
+          </p>
+        </article>
+      </section>
+
+      <section class="highlight nav-target" id="about">
+        <article class="about-card">
+          <span class="section-label">Why BETTER CLOUD</span>
+          <h2>Beautiful technology backed by serious telecommunications power.</h2>
+          <p>
+            BETTER CLOUD stands for clarity, speed, and trust. The brand identity blends the idea
+            of cloud communication with telecom signal strength, using a refined green-and-white
+            palette to communicate freshness, security, and growth.
+          </p>
+        </article>
+
+        <article class="stats-card">
+          <span class="section-label">At a Glance</span>
+          <h2>Built for modern digital connection.</h2>
+          <p>
+            Whether your audience is residential, commercial, or institutional, this look gives
+            BETTER CLOUD a strong, premium presence.
+          </p>
+          <div class="stats-list">
+            <div class="stats-item">
+              <strong>Fiber-Ready</strong>
+              <span>Prepared for high-capacity networks</span>
+            </div>
+            <div class="stats-item">
+              <strong>Cloud Native</strong>
+              <span>Supports digital-first communication tools</span>
+            </div>
+            <div class="stats-item">
+              <strong>Green Identity</strong>
+              <span>Fresh, trusted, and memorable branding</span>
+            </div>
+            <div class="stats-item">
+              <strong>Mobile First</strong>
+              <span>Responsive layout for every screen size</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="cta nav-target" id="contact">
+        <div>
+          <h2>Power your next connection with BETTER CLOUD.</h2>
+          <p>
+            Telecom services, stronger signal delivery, and modern cloud communication all in one
+            elegant brand experience.
+          </p>
+        </div>
+        <a class="button primary" href="mailto:hello@bettercloud.com">hello@bettercloud.com</a>
+      </section>
+    </main>
+
+    <footer>
+      BETTER CLOUD • Telecommunications • Green, clean, and confidently connected
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var topbar = document.querySelector(".topbar");
+      var navLinks = document.querySelectorAll('.topnav a[href^="#"]');
+      var sections = document.querySelectorAll(".nav-target");
+
+      function setActiveLink(id) {
+        navLinks.forEach(function (link) {
+          link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
+        });
+      }
+
+      function blinkSection(section, delay) {
+        if (!section) {
+          return;
+        }
+
+        window.setTimeout(function () {
+          section.classList.remove("blink-target");
+          void section.offsetWidth;
+          section.classList.add("blink-target");
+        }, delay || 0);
+      }
+
+      function scrollToSection(section) {
+        var headerOffset = topbar.offsetHeight + 28;
+        var targetTop = window.scrollY + section.getBoundingClientRect().top - headerOffset;
+
+        window.scrollTo({
+          top: targetTop,
+          behavior: "smooth"
+        });
+      }
+
+      function syncStickyState() {
+        topbar.classList.toggle("is-stuck", window.scrollY > 30);
+      }
+
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          var targetId = link.getAttribute("href").slice(1);
+          var targetSection = document.getElementById(targetId);
+
+          if (!targetSection) {
+            return;
+          }
+
+          event.preventDefault();
+          window.history.replaceState(null, "", "#" + targetId);
+          setActiveLink(targetId);
+          scrollToSection(targetSection);
+          blinkSection(targetSection, 420);
+        });
+      });
+
+      window.addEventListener("scroll", syncStickyState, { passive: true });
+      syncStickyState();
+
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActiveLink(entry.target.id);
+            }
+          });
+        }, {
+          rootMargin: "-35% 0px -45% 0px",
+          threshold: 0.15
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      if (window.location.hash) {
+        var initialTarget = document.querySelector(window.location.hash);
+
+        if (initialTarget) {
+          setActiveLink(initialTarget.id);
+          window.setTimeout(function () {
+            scrollToSection(initialTarget);
+            blinkSection(initialTarget, 120);
+          }, 100);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
