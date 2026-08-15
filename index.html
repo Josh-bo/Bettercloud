@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BETTER CLOUD | Telecommunications</title>
+  <title>BETTER CLOUD | VTU Services</title>
   <style>
     :root {
       --green-900: #063a1f;
@@ -145,10 +145,23 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .topnav::-webkit-scrollbar {
+      display: none;
     }
 
     .topnav a {
+      flex: 0 0 auto;
+      white-space: nowrap;
       text-decoration: none;
       color: var(--green-800);
       font-weight: 500;
@@ -692,6 +705,7 @@
 
       .topnav {
         width: 100%;
+        padding-bottom: 4px;
       }
 
       .topnav a {
@@ -759,14 +773,14 @@
           </svg>
         </div>
         <div class="brand-copy">
-          <small>Telecommunications</small>
+          <small>VTU Services</small>
           <strong>BETTER CLOUD</strong>
         </div>
       </a>
 
       <nav class="topnav" aria-label="Main navigation">
+        <a href="#portal">VTU Portal</a>
         <a href="#services">Services</a>
-        <a href="#network">Network</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -775,12 +789,12 @@
     <main id="home">
       <section class="hero">
         <div class="hero-copy">
-          <div class="eyebrow">Reliable Signal. Smarter Connections.</div>
+          <div class="eyebrow">Fast VTU. Easy Payments.</div>
           <h1>BETTER <span>CLOUD</span></h1>
           <p>
-            BETTER CLOUD is a modern telecommunications brand built to keep homes, businesses,
-            and communities connected with fast broadband, stable voice solutions, and dependable
-            cloud-based communication services.
+            BETTER CLOUD is a modern VTU platform built for fast airtime recharge, affordable data
+            bundles, bill payments, cable subscriptions, and the everyday digital services people
+            expect from a reliable virtual top-up portal.
           </p>
 
           <div class="hero-actions">
@@ -790,21 +804,21 @@
 
           <div class="hero-metrics">
             <div class="metric">
-              <strong>99.9%</strong>
-              <span>Network reliability</span>
+              <strong>Instant</strong>
+              <span>Airtime delivery</span>
             </div>
             <div class="metric">
               <strong>24/7</strong>
-              <span>Support coverage</span>
+              <span>Access anytime</span>
             </div>
             <div class="metric">
-              <strong>5G+</strong>
-              <span>Future-ready telecom</span>
+              <strong>All-in-One</strong>
+              <span>VTU convenience</span>
             </div>
           </div>
         </div>
 
-        <aside class="network-panel nav-target" id="network">
+        <aside class="network-panel nav-target" id="portal">
           <div class="signal-grid"></div>
           <div class="orbits">
             <div class="orbit"></div>
@@ -814,16 +828,16 @@
           </div>
 
           <div class="panel-card">
-            <h2>Connected Everywhere That Matters</h2>
+            <h2>Your Everyday VTU Portal</h2>
             <p>
-              From enterprise communication systems to last-mile broadband delivery, BETTER CLOUD
-              combines strong infrastructure with elegant digital experiences.
+              From airtime and data to TV subscriptions and electricity payments, BETTER CLOUD
+              combines speedy delivery with a clean, easy-to-use digital experience.
             </p>
             <div class="coverage">
-              <span>Broadband</span>
-              <span>Fiber</span>
-              <span>Cloud Voice</span>
-              <span>Wireless</span>
+              <span>Airtime</span>
+              <span>Data</span>
+              <span>Cable TV</span>
+              <span>Bills</span>
             </div>
           </div>
         </aside>
@@ -832,28 +846,28 @@
       <section class="info-grid nav-target" id="services">
         <article class="card">
           <div class="card-number">01</div>
-          <h3>Enterprise Connectivity</h3>
+          <h3>Airtime Recharge</h3>
           <p>
-            Secure, scalable internet and data solutions that help businesses stay online,
-            productive, and ready for growth.
+            Quick top-up for all major networks with a simple experience that helps customers buy
+            airtime in seconds.
           </p>
         </article>
 
         <article class="card">
           <div class="card-number">02</div>
-          <h3>Cloud Communication</h3>
+          <h3>Data Bundles</h3>
           <p>
-            Smart voice, messaging, and collaboration systems designed for clear communication
-            across teams and customer channels.
+            Affordable data plans delivered fast, making BETTER CLOUD a dependable place to stay
+            connected every day.
           </p>
         </article>
 
         <article class="card">
           <div class="card-number">03</div>
-          <h3>Telecom Infrastructure</h3>
+          <h3>VTU Essentials</h3>
           <p>
-            Strong network architecture, responsive support, and dependable signal delivery for
-            organizations that cannot afford downtime.
+            Support for the extra services users expect from VTU portals, including bill payment,
+            cable subscriptions, and other digital utilities.
           </p>
         </article>
       </section>
@@ -861,29 +875,29 @@
       <section class="highlight nav-target" id="about">
         <article class="about-card">
           <span class="section-label">Why BETTER CLOUD</span>
-          <h2>Beautiful technology backed by serious telecommunications power.</h2>
+          <h2>Beautiful design built around the services people use every day.</h2>
           <p>
-            BETTER CLOUD stands for clarity, speed, and trust. The brand identity blends the idea
-            of cloud communication with telecom signal strength, using a refined green-and-white
-            palette to communicate freshness, security, and growth.
+            BETTER CLOUD stands for speed, simplicity, and trust. The brand identity now reflects
+            a modern VTU business with a fresh green-and-white look that feels secure, accessible,
+            and ready for daily transactions.
           </p>
         </article>
 
         <article class="stats-card">
           <span class="section-label">At a Glance</span>
-          <h2>Built for modern digital connection.</h2>
+          <h2>Built for fast digital top-up and utility payments.</h2>
           <p>
-            Whether your audience is residential, commercial, or institutional, this look gives
-            BETTER CLOUD a strong, premium presence.
+            Whether your audience is students, workers, families, or resellers, this look gives
+            BETTER CLOUD a clean and trustworthy VTU presence.
           </p>
           <div class="stats-list">
             <div class="stats-item">
-              <strong>Fiber-Ready</strong>
-              <span>Prepared for high-capacity networks</span>
+              <strong>All Networks</strong>
+              <span>Made for airtime and data across major providers</span>
             </div>
             <div class="stats-item">
-              <strong>Cloud Native</strong>
-              <span>Supports digital-first communication tools</span>
+              <strong>Bills & TV</strong>
+              <span>Handles common utility and subscription payments</span>
             </div>
             <div class="stats-item">
               <strong>Green Identity</strong>
@@ -899,10 +913,10 @@
 
       <section class="cta nav-target" id="contact">
         <div>
-          <h2>Power your next connection with BETTER CLOUD.</h2>
+          <h2>Handle airtime, data, and payments with BETTER CLOUD.</h2>
           <p>
-            Telecom services, stronger signal delivery, and modern cloud communication all in one
-            elegant brand experience.
+            A clean VTU experience for top-ups, subscriptions, and everyday digital payment needs
+            in one elegant brand experience.
           </p>
         </div>
         <a class="button primary" href="mailto:hello@bettercloud.com">hello@bettercloud.com</a>
@@ -910,7 +924,7 @@
     </main>
 
     <footer>
-      BETTER CLOUD • Telecommunications • Green, clean, and confidently connected
+      BETTER CLOUD | VTU Services | Airtime, data, bills, and digital convenience
     </footer>
   </div>
   <script>
