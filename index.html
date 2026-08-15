@@ -141,22 +141,18 @@
       letter-spacing: 0.03em;
     }
 
+    .nav-shell {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
     .topnav {
       display: flex;
       align-items: center;
       gap: 14px;
       flex-wrap: nowrap;
-      max-width: 100%;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
       white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .topnav::-webkit-scrollbar {
-      display: none;
     }
 
     .topnav a {
@@ -704,12 +700,22 @@
       }
 
       .topnav {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
         width: 100%;
-        padding-bottom: 4px;
+      }
+
+      .nav-shell {
+        width: 100%;
       }
 
       .topnav a {
-        padding: 10px 14px;
+        min-width: 0;
+        padding: 10px 4px;
+        text-align: center;
+        font-size: clamp(0.78rem, 2.7vw, 0.92rem);
+        letter-spacing: -0.01em;
       }
 
       .hero {
@@ -778,12 +784,14 @@
         </div>
       </a>
 
-      <nav class="topnav" aria-label="Main navigation">
-        <a href="#portal">VTU Portal</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="nav-shell">
+        <nav class="topnav" aria-label="Main navigation">
+          <a href="#portal">VTU Portal</a>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
     </header>
 
     <main id="home">
@@ -932,6 +940,9 @@
       var topbar = document.querySelector(".topbar");
       var navLinks = document.querySelectorAll('.topnav a[href^="#"]');
       var sections = document.querySelectorAll(".nav-target");
+      var pendingActiveId = "";
+      var pendingSection = null;
+      var pendingResetTimer = 0;
 
       function setActiveLink(id) {
         navLinks.forEach(function (link) {
@@ -965,6 +976,41 @@
         topbar.classList.toggle("is-stuck", window.scrollY > 30);
       }
 
+      function syncActiveSection() {
+        if (!sections.length) {
+          return;
+        }
+
+        if (pendingActiveId && pendingSection) {
+          var pendingOffset = topbar.offsetHeight + 28;
+          var pendingDistance = Math.abs(pendingSection.getBoundingClientRect().top - pendingOffset);
+
+          if (pendingDistance > 28) {
+            setActiveLink(pendingActiveId);
+            return;
+          }
+
+          pendingActiveId = "";
+          pendingSection = null;
+          window.clearTimeout(pendingResetTimer);
+        }
+
+        var probeY = window.scrollY + topbar.offsetHeight + 60;
+        var activeId = sections[0].id;
+
+        sections.forEach(function (section) {
+          if (section.offsetTop <= probeY) {
+            activeId = section.id;
+          }
+        });
+
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+          activeId = sections[sections.length - 1].id;
+        }
+
+        setActiveLink(activeId);
+      }
+
       navLinks.forEach(function (link) {
         link.addEventListener("click", function (event) {
           var targetId = link.getAttribute("href").slice(1);
@@ -976,6 +1022,14 @@
 
           event.preventDefault();
           window.history.replaceState(null, "", "#" + targetId);
+          pendingActiveId = targetId;
+          pendingSection = targetSection;
+          window.clearTimeout(pendingResetTimer);
+          pendingResetTimer = window.setTimeout(function () {
+            pendingActiveId = "";
+            pendingSection = null;
+            syncActiveSection();
+          }, 1400);
           setActiveLink(targetId);
           scrollToSection(targetSection);
           blinkSection(targetSection, 420);
@@ -983,24 +1037,9 @@
       });
 
       window.addEventListener("scroll", syncStickyState, { passive: true });
+      window.addEventListener("scroll", syncActiveSection, { passive: true });
       syncStickyState();
-
-      if ("IntersectionObserver" in window) {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              setActiveLink(entry.target.id);
-            }
-          });
-        }, {
-          rootMargin: "-35% 0px -45% 0px",
-          threshold: 0.15
-        });
-
-        sections.forEach(function (section) {
-          observer.observe(section);
-        });
-      }
+      syncActiveSection();
 
       if (window.location.hash) {
         var initialTarget = document.querySelector(window.location.hash);
@@ -1008,8 +1047,17 @@
         if (initialTarget) {
           setActiveLink(initialTarget.id);
           window.setTimeout(function () {
+            pendingActiveId = initialTarget.id;
+            pendingSection = initialTarget;
+            window.clearTimeout(pendingResetTimer);
+            pendingResetTimer = window.setTimeout(function () {
+              pendingActiveId = "";
+              pendingSection = null;
+              syncActiveSection();
+            }, 1400);
             scrollToSection(initialTarget);
             blinkSection(initialTarget, 120);
+            syncActiveSection();
           }, 100);
         }
       }
